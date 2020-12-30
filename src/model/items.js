@@ -29,4 +29,15 @@ module.exports = {
       });
     });
   },
+  patch: (setData, id) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE items SET ? WHERE id = ${id}`,
+        setData,
+        (err, data) => {
+          !err ? resolve(data) : reject(new Error(err));
+        }
+      );
+    });
+  },
 };

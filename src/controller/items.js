@@ -1,5 +1,5 @@
 const helper = require("../helper/helper");
-const { getAll, post, getById, deleteById } = require("../model/items");
+const { getAll, post, getById, deleteById, patch } = require("../model/items");
 module.exports = {
   getAllItems: async (req, res) => {
     try {
@@ -14,10 +14,8 @@ module.exports = {
     try {
       const { id } = req.params;
       const data = await getById(id);
-      console.log(data);
       return helper.response(res, 200, "SUCCESS", data);
     } catch (err) {
-      console.log(err);
       return helper.response(res, 400, "BAD REQUEST", err);
     }
   },
@@ -45,8 +43,39 @@ module.exports = {
       return helper.response(res, 400, "BAD REQUEST", err);
     }
   },
-  updateItem: async (req, res) => {
+  patchItem: async (req, res) => {
+    const { id } = req.params;
+    const { item_name, item_capital, item_price, item_category } = req.body;
     try {
+      const oldData = await getById(id);
+      console.log(typeof oldData[0].item_capital);
+
+      let setData = {
+        item_name:
+          item_name === null || item_name === undefined || item_name === ""
+            ? oldData[0].item_name
+            : item_name,
+        item_capital:
+          item_capital === null ||
+          item_capital === undefined ||
+          item_capital === ""
+            ? oldData[0].item_capital
+            : item_capital,
+        item_price:
+          item_price === null || item_price === undefined || item_price === ""
+            ? oldData[0].item_price
+            : item_price,
+        item_category:
+          item_category === null ||
+          item_category === undefined ||
+          item_category === ""
+            ? oldData[0].item_category
+            : item_category,
+        updated_at: new Date(),
+      };
+
+      await patch(setData, id);
+      return helper.response(res, 200, "SUCCESS EDIT ITEM");
     } catch (err) {
       console.log(err);
       return helper.response(res, 400, "BAD REQUEST", err);
