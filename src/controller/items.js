@@ -6,7 +6,6 @@ module.exports = {
       const data = await getAll();
       return helper.response(res, 200, "SUCCESS", data);
     } catch (err) {
-      console.log(err);
       return helper.response(res, 400, "BAD REQUEST", err);
     }
   },
@@ -77,7 +76,6 @@ module.exports = {
       await patch(setData, id);
       return helper.response(res, 200, "SUCCESS EDIT ITEM");
     } catch (err) {
-      console.log(err);
       return helper.response(res, 400, "BAD REQUEST", err);
     }
   },
@@ -87,7 +85,6 @@ module.exports = {
       await deleteById(id);
       return helper.response(res, 200, "ITEM DELETED");
     } catch (err) {
-      console.log(err);
       return helper.response(res, 400, "BAD REQUEST", err);
     }
   },
