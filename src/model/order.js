@@ -42,38 +42,4 @@ module.exports = {
       );
     });
   },
-  postHistory: (setData) => {
-    return new Promise((resolve, reject) => {
-      connection.query(`INSERT INTO history SET ?`, setData, (err, data) => {
-        if (!err) {
-          const newData = {
-            id: data.insertId,
-            ...setData,
-          };
-          resolve(newData);
-        } else {
-          reject(new Error(err));
-        }
-      });
-    });
-  },
-  patchHistory: (setData, id) => {
-    return new Promise((resolve, reject) => {
-      connection.query(
-        "UPDATE history SET ? WHERE id = ?",
-        [setData, id],
-        (err, data) => {
-          if (!err) {
-            const newData = {
-              id: id,
-              ...setData,
-            };
-            resolve(newData);
-          } else {
-            reject(new Error(err));
-          }
-        }
-      );
-    });
-  },
 };

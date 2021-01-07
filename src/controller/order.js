@@ -6,9 +6,9 @@ const {
   postOrder,
   sumTotal,
   sumCapital,
-  postHistory,
-  patchHistory,
 } = require("../model/order");
+
+const { postHistory, patchHistory } = require("../model/history");
 
 module.exports = {
   postOrder: async (req, res) => {
