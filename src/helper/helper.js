@@ -1,5 +1,3 @@
-const response = require("express");
-
 module.exports = {
   response: (response, status, msg, data) => {
     const result = {};
