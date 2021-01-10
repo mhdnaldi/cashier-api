@@ -78,7 +78,6 @@ module.exports = {
     const { item_name, item_capital, item_price, item_category } = req.body;
     try {
       const oldData = await getById(id);
-      console.log(typeof oldData[0].item_capital);
 
       let setData = {
         item_name:
@@ -121,21 +120,20 @@ module.exports = {
   },
   searchItems: async (req, res) => {
     try {
-      console.log(true);
-      const { name } = req.body;
+      let { name } = req.query;
       const result = await search(name);
       return helper.response(res, 200, "SUCCESS", result);
     } catch (err) {
+      console.log(err);
       return helper.response(res, 400, "BAD REQUEST", err);
     }
   },
   sortItems: async (req, res) => {
     try {
-      const { category } = req.body;
+      const { category } = req.query;
       const result = await sort(category);
       return helper.response(res, 200, "SUCCESS", result);
     } catch (err) {
-      console.log(err);
       return helper.response(res, 400, "BAD REQUEST", err);
     }
   },

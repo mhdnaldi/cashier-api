@@ -51,13 +51,21 @@ module.exports = {
     });
   },
   sort: (category) => {
-    return new Promise((resolve, reject) => {
-      connection.query(
-        `SELECT * FROM items WHERE item_category = '${category}'`,
-        (err, data) => {
+    if (category === "") {
+      return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM items", (err, data) => {
           !err ? resolve(data) : reject(new Error(err));
-        }
-      );
-    });
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        connection.query(
+          `SELECT * FROM items WHERE item_category = '${category}'`,
+          (err, data) => {
+            !err ? resolve(data) : reject(new Error(err));
+          }
+        );
+      });
+    }
   },
 };
