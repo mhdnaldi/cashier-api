@@ -1,5 +1,13 @@
 const helper = require("../helper/helper");
-const { getAll, post, getById, deleteById, patch } = require("../model/items");
+const {
+  getAll,
+  post,
+  getById,
+  deleteById,
+  patch,
+  search,
+  sort,
+} = require("../model/items");
 module.exports = {
   getAllItems: async (req, res) => {
     try {
@@ -108,6 +116,26 @@ module.exports = {
       await deleteById(id);
       return helper.response(res, 200, "ITEM DELETED");
     } catch (err) {
+      return helper.response(res, 400, "BAD REQUEST", err);
+    }
+  },
+  searchItems: async (req, res) => {
+    try {
+      console.log(true);
+      const { name } = req.body;
+      const result = await search(name);
+      return helper.response(res, 200, "SUCCESS", result);
+    } catch (err) {
+      return helper.response(res, 400, "BAD REQUEST", err);
+    }
+  },
+  sortItems: async (req, res) => {
+    try {
+      const { category } = req.body;
+      const result = await sort(category);
+      return helper.response(res, 200, "SUCCESS", result);
+    } catch (err) {
+      console.log(err);
       return helper.response(res, 400, "BAD REQUEST", err);
     }
   },

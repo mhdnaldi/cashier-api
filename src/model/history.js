@@ -35,6 +35,27 @@ module.exports = {
       );
     });
   },
+  // RECENT ORDERS
+  recentOrders: (id) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT * FROM orders WHERE DAY(created_at) = DAY(NOW()) AND history_id = ${id}`,
+        (err, data) => {
+          !err ? resolve(data) : reject(new Error(err));
+        }
+      );
+    });
+  },
+  recentOrdersId: () => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT history_id FROM orders WHERE DAY(created_at) = DAY(NOW())`,
+        (err, data) => {
+          !err ? resolve(data) : reject(new Error(err));
+        }
+      );
+    });
+  },
   totalToday: () => {
     return new Promise((resolve, reject) => {
       connection.query(

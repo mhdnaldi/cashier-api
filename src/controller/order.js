@@ -56,8 +56,6 @@ module.exports = {
 
         await patchHistory(updatedHistory, historyId);
       });
-      // const subTotal = await orderByInvoice(invoice);
-      // console.log(subTotal);
       return helper.response(res, 200, "SUCCESS");
     } catch (err) {
       console.log(err);
