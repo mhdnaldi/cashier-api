@@ -10,6 +10,8 @@ const {
   recentOrders,
   recentOrdersId,
 } = require("../model/history");
+
+const { orderById } = require("../model/order");
 const { get } = require("../routes/order");
 
 module.exports = {
@@ -55,19 +57,20 @@ module.exports = {
   },
   recentOrders: async (req, res) => {
     try {
-      const getId = await recentOrdersId();
-      const arrOfId = [];
-      for (let i = 0; i < getId.length - 1; i++) {
-        if (getId[i].history_id === getId[i + 1].history_id) {
-          arrOfId.push(getId[i].history_id);
-        }
-      }
-      for (let i = 0; i < arrOfId.length; i++) {
-        const orders = await recentOrders(arrOfId[i]);
-        console.log(orders);
-      }
+      // UNSOLVED YET
+      // const getId = await recentOrdersId();
+      // const arrOfId = getId.map((el) => el.history_id);
+      // let id = [...new Set(arrOfId)];
+      // let arr = [];
+      // for (let i = 0; i < id.length; i++) {
+      //   arr.push(await recentOrders(id[i]));
+      // }
+
+      const result = await recentOrders();
+
+      return helper.response(res, 200, "SUCCESS", result);
     } catch (err) {
-      console.log(err);
+      return helper.response(res, 400, "BAD REQUEST", err);
     }
   },
 };
